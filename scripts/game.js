@@ -1,5 +1,8 @@
 
-const startGame = $('#start-btn').on('click',function(){
+const intiateGame = $(document).on('ready',function(){
+
+//  GAME VARIABLES  
+  //  OBJECT conataining questions objects
   const qObject = {
     qOne: {
       question: 'To keep Jack Nicholson in an right agitated mood, he was only fed this food for two weeks that he hates...',
@@ -33,52 +36,68 @@ const startGame = $('#start-btn').on('click',function(){
     }
   };
 
+  //  GLOBAL GAME VARIABLES
   const qIndexArray = Object.keys(qObject);
-  let currentKey = qObject[gameRound];
-  let currentObject = qObject[currentKey];
-  console.log(currentQ);
-
+  console.log(qIndexArray);
+  
   let gameRound = 0;
-  let questionsCorrect = 0;
-  let questionsWrong = 0;
+  let qCorrect = 0;
+  let qWrong = 0;
+
+//  GAME FUNCTIONS
 
 
-  //  remove the game description text and element + start button to allow for questions to 
-  //  be appended with different formatting and attributes
-  $('#hotel-key-div').fadeOut( "slow" );
-  $('#game-content-1').fadeOut( "slow" );
-  
-  $('#game-content-2').text(currentQ.question);
-
-  // displayQuestion(gameRound);
-});
-  
-let displayQuestion = function(indexRound){
-
-  
-  let questionObject = qArray[indexRound];
-  $('#start-btn').remove();
-  let timerSpan =  $('<span id="timer">')
-  $('#game-content-2').text(timerSpan);  
-  $('#question-text').text('test test test');
-  // questionObject.question 
-  
-  //  TIMER: 30 second timer that starts with question being displayed
-  var counter = setInterval(timer, 1000);
-  let count = 30;
-  function timer(){
-    count-=1;
-    if (count <= -1){
-       clearInterval(counter);
-       alert('time is up!');
-      //  showAnswer();
-    };
-    console.log(count);
+  let displayQuestion = function(){
+    
     $('#timer').html('Come out, come out, wherever you are! Hurry up or Jack will find ya!  :' + count + ' seconds');
-  }
+
+  //  TIMER: 30 second timer that starts with question being displayed
+    const counter = setInterval(timer, 1000);
+    let count = 30;
+    function timer(){
+      count-=1;
+      if (count <= -1){
+         if (clearInterval(counter);
+         alert('time is up!');
+        //  showAnswer();
+      }
+      else if (qAnswered === true) {
+        clearInterval(counter);
+
+      }
+      console.log(count);
+    
+    let qAnswered = false;  
+    
+    let currentKey = qObject[gameRound];
+    let currentObject = qObject[currentKey];
   
-  gameRound++;
-};
+    let questionObject = qObject[gameRound];
+    $('#start-btn').remove();
+    let timerSpan =  $('<span id="timer">')
+    $('#game-content-2').text(timerSpan);  
+    $('#question-text').text('test test test');
+    // questionObject.question 
+    
+    
+    }
+  };
+
+  
+//  FUNCTION CALLS AND GAME INTERACTION
+  //  remove the game description text and element + start button to allow for questions to 
+  //  be appended with different formatting and attributes  
+  const startGame = $('#start-btn').on('click',function(){  
+    $('#hotel-key-div').fadeOut( "slow" );
+    $('#game-content-1').fadeOut( "slow" );
+    
+    for (let i=0; i< qIndexArray.length; i++) {
+      displayQuestion();
+    };
+  });
+
+
+
 
   // let showAnswer = function(){
 
