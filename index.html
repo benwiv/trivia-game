@@ -11,15 +11,20 @@
 <body>
 
   <div id="wrapper">
-    <header id="main-title">Heeeeere's Trivia!</header>
-    <section id="game-content-1">
-      Stanley Kubrick's horror masterpiece 'The Shining' lives on forever in the minds of the cast and crew, and if you've experienced the
-      dark journey into the human psyche and self-destruction you won't soon forget it. See if you remember these little questions as you tour 
+    <!-- <header id="main-title">Heeeeere's Trivia!</header> -->
+    <div id="title-container">
+      <img src='./assets/shining-title.png' id='game-title'>
+    </div>
+    <section id="game-content-1" class="fade-in">
+      If you've experienced Stanley Kubrick's horror masterpiece <span class='title-word'>'The Shining'</span> - a
+      dark, self-destructive journey into the human psyche - you won't soon forget it. 
+      See if you remember these little questions as you tour 
       the Overlook Hotel yourself, and keep your eye on the clock in case something still lurks about in the Labyrinth...
     </section>
-    <section id="game-content-2"></section>
+    <section id="game-content-2" class="fade-in"></section>
     <div id="hotel-key-div">
       <img src="./assets/hotel-key.png" class="zoom" id="start-btn"/>
+      <p id="question-text"></p>
       <p id="click-text">grab your key to check in!</p>
     </div>
   </div>
