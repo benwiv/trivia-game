@@ -1,0 +1,72 @@
+@font-face {
+	font-family: 'Runcible';
+	src: url('../assets/fonts/runcible.svg');
+	src: url('../assets/fonts/runcible.eot') format('embedded-opentype'),
+       url('../assets/fonts/runcible.ttf') format('truetype'),
+	     url('../assets/fonts/runcible.svg') format('svg');
+	font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family:'Runcible', sans-serif;
+  line-height: 1.5 em;
+  /* background: url(../assets/shining-carpet-BG-1.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; */
+  background-color: lightgoldenrodyellow;
+  margin: 10px;
+  
+}
+
+#wrapper {
+  margin: 3% 16%;
+  max-height: 900px;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#main-title {
+  font-size: 50px;
+  text-align: center;
+  margin: 4%;
+}
+
+#game-content-1 {
+  font-size: 25px;
+}
+
+#game-content-2 {
+  font-size: 30px;
+}
+
+#hotel-key-div{
+  padding: 150px;
+  display:flex;
+  flex-direction: row;
+  align-content: center;
+}
+
+#start-btn {
+  height: 340px;
+  width: 340px ;
+}
+
+.zoom {
+    transition: transform .15s; /* Animation */
+}
+
+.zoom:hover {
+  transform: scale(1.05); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+#click-text {
+  text-align: center;
+  min-width: 100px;
+  margin: 100px 0 0 20px;
+  font-size: 20px;
+}
