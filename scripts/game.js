@@ -1,100 +1,117 @@
 
-const intiateGame = $(document).on('ready',function(){
-
+$(document).ready(function(){
 //  GAME VARIABLES  
   //  OBJECT conataining questions objects
   const qObject = {
-    qOne: {
-      question: 'To keep Jack Nicholson in an right agitated mood, he was only fed this food for two weeks that he hates...',
-      answer: ['spaghetti','cheese sandwiches','hot dogs','tuna salad'],
-      correctAnswers: 1,
-      questionGIF: ''
-    },
-    qTwo: {
-      question: 'Danny has an imaginary friend that lives in his mouth who tells him secrets about the world around him...what name does Danny give this friend?',
-      answers: ['Charles','Bud','Tony','Chip'],
-      correctAnswer: 2,
-      questionGIF: ''
-    },
-    qThree: {
-      question: '',
-      answers: ['','','',''],
-      correctAnswer: '',
-      questionGIF: ''
-    },
-    qFour: {
-      question: '',
-      answers: ['','','',''],
-      correctAnswer: '',
-      questionGIF: ''
-    },
-    qFive: {
-      question: '',
-      answers: ['','','',''],
-      correctAnswer: '',
-      questionGIF: ''
-    }
+    questionList:[
+      'To keep Jack Nicholson in an right agitated mood, he was only fed this food for two weeks that he hates...', 
+      'Danny has an imaginary friend that lives in his mouth who tells him secrets about the world around him...what name does Danny give this friend?',
+      'How many years did it take Kubrick and his team to create "The Shining"?',
+      'After 1 week in theatres, Kubrick decided to use a different ending and yanked the first version from cinemas around the country. In that first version...',
+      '"The Shining" followed the biggest box office failure Kubrick ever experienced. What film was this?',
+    ],
+    answerList: [
+      ['spaghetti','cheese sandwiches','hot dogs','tuna salad'],
+      ['Charles','Bud','Tony','Chip'],
+      ['1 year', '3 years', '5 years', '8 years'],
+      ['Jack dissappears and is never found, and Wendy is shown crying in a bathroom', 'the entire family goes missing, and all that a search party finds is a typewriter in the snow','Jack wakes up from snoozing at his typewriter, and we hear Wendy calling for him while a creepy grin comes across his face','the hotel manager tells Wendy there is no sign of any trouble and that the Overlook is reopening'],
+      ['Barry Lyndon', '2001: A Space Odyssey', 'Eyes Wide Shut', 'Dr. Strangelove']
+    ],
+    correctAnswerList: [
+      1, 2, 2, 3, 0
+    ],
+    questionGifs: [
+      '','','','',''
+    ]
   };
-
-  //  GLOBAL GAME VARIABLES
-  const qIndexArray = Object.keys(qObject);
-  console.log(qIndexArray);
   
-  let gameRound = 0;
-  let qCorrect = 0;
-  let qWrong = 0;
+  let qArray = 5;
 
-//  GAME FUNCTIONS
+  $('#start-btn').on('click',function(){  
+    
+    $('#hotel-key-div').fadeOut("slow");
+    $('#game-content-1').fadeOut("slow");
+    $('#game-content-2').fadeOut("slow");
+    
+    let qWrong = 0;
+    let qCorrect = 0; 
 
+    
+    for (let i=0; i < qArray; i++) {
+      let currentQ = qObject.questionList[i];
+      let currentAnswers = qObject.answerList[i];
+      let currentCorrect = qObject.correctAnswerList[i];
 
-  let displayQuestion = function(){
-    
-    $('#timer').html('Come out, come out, wherever you are! Hurry up or Jack will find ya!  :' + count + ' seconds');
-
-  //  TIMER: 30 second timer that starts with question being displayed
-    const counter = setInterval(timer, 1000);
-    let count = 30;
-    function timer(){
-      count-=1;
-      if (count <= -1){
-         if (clearInterval(counter);
-         alert('time is up!');
-        //  showAnswer();
-      }
-      else if (qAnswered === true) {
-        clearInterval(counter);
-
-      }
-      console.log(count);
-    
-    let qAnswered = false;  
-    
-    let currentKey = qObject[gameRound];
-    let currentObject = qObject[currentKey];
-  
-    let questionObject = qObject[gameRound];
-    $('#start-btn').remove();
-    let timerSpan =  $('<span id="timer">')
-    $('#game-content-2').text(timerSpan);  
-    $('#question-text').text('test test test');
-    // questionObject.question 
-    
-    
-    }
-  };
-
-  
-//  FUNCTION CALLS AND GAME INTERACTION
-  //  remove the game description text and element + start button to allow for questions to 
-  //  be appended with different formatting and attributes  
-  const startGame = $('#start-btn').on('click',function(){  
-    $('#hotel-key-div').fadeOut( "slow" );
-    $('#game-content-1').fadeOut( "slow" );
-    
-    for (let i=0; i< qIndexArray.length; i++) {
-      displayQuestion();
+      $('game-content-2').text(currentQ);
+      $('#game-content-2').fadeIn("slow");
     };
+
+
+  
+  //  GAME FUNCTIONS
+    //TIMER
+    let startTimer = function(duration, display) {
+      var timer = duration, seconds;
+      setInterval(function () {
+          seconds = parseInt(timer % 60, 10);
+          seconds = seconds < 10 ? "0" + seconds : seconds;
+  
+          display.text(" :" + seconds);
+  
+          if (--timer < 0) {
+              timer = duration;
+          }
+      }, 1000);
+    }
+  
+    
+      const qAnswered = false; 
+  
+    //  TIMER: 30 second timer that starts with question being displayed
+    jQuery(function ($) {
+      var fortySec = 40,
+          display = $('#timer').html('Come out, come out, wherever you are! Hurry up or Jack will find ya!  :' + count + ' seconds');
+      startTimer(fortySec, display);
+    });  
+    
+    // var counter = setInterval(timer, 1000);
+      // let count = 30;
+      // 
+      
+      // function timer(){
+      //   count-=1;
+      //   if (count <= -1){
+      //     if (clearInterval(counter)){
+      //        alert('time is up!');
+      //     }
+      //   }
+      //   console.log(count);
+      
+       
+      
+      // let currentKey = qObject[gameRound];
+      // let currentObject = qObject[currentKey];
+    
+      // let questionObject = qObject[gameRound];
+      // $('#start-btn').remove();
+      // let timerSpan =  $('<span id="timer">')
+      // $('#game-content-2').text(timerSpan);  
+      // $('#question-text').text('test test test');
+
+
+      // questionObject.question 
+      }
+    
+  //  FUNCTION CALLS AND GAME INTERACTION
+    //  remove the game description text and element + start button to allow for questions to 
+    //  be appended with different formatting and attributes  
+
+      
   });
+});
+
+
+
 
 
 
