@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="./CSS/style.css">
 </head>
 <body>
-
   <div id="wrapper">
     <!-- <header id="main-title">Heeeeere's Trivia!</header> -->
     <div id="title-container">
@@ -21,7 +20,7 @@
       See if you remember these little questions as you tour 
       the Overlook Hotel yourself, and keep your eye on the clock in case something still lurks about in the Labyrinth...
     </section>
-    <section id="game-content-2" class="fade-in"></section>
+    <section id="game-content-2"></section>
     <div id="hotel-key-div">
       <img src="./assets/hotel-key.png" class="zoom" id="start-btn"/>
       <p id="question-text"></p>
@@ -29,6 +28,10 @@
     </div>
   </div>
 
+  <iframe src="./assets/audio/silence.mp3" allow="autoplay" id="audio" style="display:none"></iframe>
+  <audio id='player' volume=.5 autoplay loop>
+    <source src="./assets/audio/Deerhoof - Deerhoof Plays Music Of The Shining - 02 Midnight, The Stars And You.mp3" type="audio/mp3">
+  </audio>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="./scripts/game.js"></script>

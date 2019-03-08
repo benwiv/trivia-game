@@ -1,10 +1,15 @@
 
 $(document).ready(function(){
-//  GAME VARIABLES  
+
+  var result = $('#result')
+  $('#yes-audio').attr('play',true);
+
+
+  //  GAME VARIABLES  
   //  OBJECT conataining questions objects
   const qObject = {
     questionList:[
-      'To keep Jack Nicholson in an right agitated mood, he was only fed this food for two weeks that he hates...', 
+      'To keep Jack Nicholson in the right agitated mood, he was only fed this food for two weeks that he hates...', 
       'Danny has an imaginary friend that lives in his mouth who tells him secrets about the world around him...what name does Danny give this friend?',
       'How many years did it take Kubrick and his team to create "The Shining"?',
       'After 1 week in theatres, Kubrick decided to use a different ending and yanked the first version from cinemas around the country. In that first version...',
@@ -31,80 +36,72 @@ $(document).ready(function(){
     
     $('#hotel-key-div').fadeOut("slow");
     $('#game-content-1').fadeOut("slow");
-    $('#game-content-2').fadeOut("slow");
-    $('#game-content-2').html('<section id="game-content-2" class="fade-in"></section>')
-    let qWrong = 0;
-    let qCorrect = 0; 
-
+    // $('#game-content-2').fadeOut("slow");
+    // $('#game-content-2').html('<section id="game-content-2"></section>')
     
-    for (let i=0; i < qArray; i++) {
+    let newDiv = $("<p class='game-q' class='fade-in'>").text(qObject.questionList[0]);
+    $('#game-content-2').append(newDiv);
+
+    // let newDiv2 = $("<p class='game-answers' class='fade-in'>").text(qObject.answerList[0]);
+    // $('#game-content-2').append(newDiv2);
+    let answerArr = qObject.questionList[i];
+    for (let k=0; k<4;j++){
+      let newDiv2 = $("<p class='game-answer-single' class='fade-in'>").text(answerArr[k]);
+      $('#game-content-2').append(newDiv2);
+    };
+
+    const qWrong = 0;
+    let qCorrect = 0; 
+    let playerGuess = 99;
+
+    let count = 45;
+    var i = 0;
+
+    var intervalId = setInterval(function(){
       let currentQ = qObject.questionList[i];
       let currentAnswers = qObject.answerList[i];
       let currentCorrect = qObject.correctAnswerList[i];
-      console.log(currentQ);
-      console.log(currentAnswers);
-      console.log(currentCorrect);
-
-      let newDiv = $('<div id="game-content-"' + [i] + 'class="fade-in">').text(currentQ);
+      
+      if(i === (qArray-1)){
+        clearInterval(intervalId);
+      }
+      // else if ($(playerGuess).val){
+      //   //check answer
+      // }
+      
+      let newDiv = $("<p class='game-q' class='fade-in'>").text(currentQ);
       $('#game-content-2').append(newDiv);
-    };
-
-
-  
-  //  GAME FUNCTIONS
-    //TIMER
-    // let startTimer = function(duration, display) {
-    //   var timer = duration, seconds;
-    //   setInterval(function () {
-    //       seconds = parseInt(timer % 60, 10);
-    //       seconds = seconds < 10 ? "0" + seconds : seconds;
-  
-    //       display.text(" :" + seconds);
-  
-    //       if (--timer < 0) {
-    //           timer = duration;
-    //       }
-    //   }, 1000);
-    // }
-  
       
-    //  TIMER: 30 second timer that starts with question being displayed
-    // jQuery(function ($) {
-    //   var fortySec = 40,
-    //       display = $('#timer').html('Come out, come out, wherever you are! Hurry up or Jack will find ya!  :' + count + ' seconds');
-    //   startTimer(fortySec, display);
-    // });  
-    
-    // var counter = setInterval(timer, 1000);
-      // let count = 30;
-      // 
-      
-      // function timer(){
-      //   count-=1;
-      //   if (count <= -1){
-      //     if (clearInterval(counter)){
-      //        alert('time is up!');
-      //     }
-      //   }
-      //   console.log(count);
-      
-       
-      
-      // let currentKey = qObject[gameRound];
-      // let currentObject = qObject[currentKey];
-    
-      // let questionObject = qObject[gameRound];
-      // $('#start-btn').remove();
-      // let timerSpan =  $('<span id="timer">')
-      // $('#game-content-2').text(timerSpan);  
-      // $('#question-text').text('test test test');
+      let answerArr = qObject.questionList[i];
+      for (let j=0; j<4;j++){
+        let newDiv2 = $("<p class='game-answer-single' class='fade-in'>").text(answerArr[j]);
+        $('#game-content-2').append(newDiv2);
+      };
 
-
-      // questionObject.question 
-
-      
+      i++;
+      count--;
+      $('#timer').html('Come out, come out, wherever you are! Hurry up or Jack will find ya!  :' + count + ' seconds')
+    }, 1000*45);
   });
 });
+
+    // for (let i=0; i < qArray; i++) {
+    //   let currentQ = qObject.questionList[i];
+    //   let currentAnswers = qObject.answerList[i];
+    //   let currentCorrect = qObject.correctAnswerList[i];
+
+    // let currentKey = qObject[gameRound];
+    // let currentObject = qObject[currentKey];
+  
+    // let questionObject = qObject[gameRound];
+    // $('#start-btn').remove();
+    // let timerSpan =  $('<span id="timer">')
+    // $('#game-content-2').text(timerSpan);  
+    // $('#question-text').text('test test test');
+    // questionObject.question 
+
+      
+
 
 
 
