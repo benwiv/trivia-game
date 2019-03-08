@@ -32,7 +32,7 @@ $(document).ready(function(){
     $('#hotel-key-div').fadeOut("slow");
     $('#game-content-1').fadeOut("slow");
     $('#game-content-2').fadeOut("slow");
-    
+    $('#game-content-2').html('<section id="game-content-2" class="fade-in"></section>')
     let qWrong = 0;
     let qCorrect = 0; 
 
@@ -41,38 +41,39 @@ $(document).ready(function(){
       let currentQ = qObject.questionList[i];
       let currentAnswers = qObject.answerList[i];
       let currentCorrect = qObject.correctAnswerList[i];
+      console.log(currentQ);
+      console.log(currentAnswers);
+      console.log(currentCorrect);
 
-      $('game-content-2').text(currentQ);
-      $('#game-content-2').fadeIn("slow");
+      let newDiv = $('<div id="game-content-"' + [i] + 'class="fade-in">').text(currentQ);
+      $('#game-content-2').append(newDiv);
     };
 
 
   
   //  GAME FUNCTIONS
     //TIMER
-    let startTimer = function(duration, display) {
-      var timer = duration, seconds;
-      setInterval(function () {
-          seconds = parseInt(timer % 60, 10);
-          seconds = seconds < 10 ? "0" + seconds : seconds;
+    // let startTimer = function(duration, display) {
+    //   var timer = duration, seconds;
+    //   setInterval(function () {
+    //       seconds = parseInt(timer % 60, 10);
+    //       seconds = seconds < 10 ? "0" + seconds : seconds;
   
-          display.text(" :" + seconds);
+    //       display.text(" :" + seconds);
   
-          if (--timer < 0) {
-              timer = duration;
-          }
-      }, 1000);
-    }
+    //       if (--timer < 0) {
+    //           timer = duration;
+    //       }
+    //   }, 1000);
+    // }
   
-    
-      const qAnswered = false; 
-  
+      
     //  TIMER: 30 second timer that starts with question being displayed
-    jQuery(function ($) {
-      var fortySec = 40,
-          display = $('#timer').html('Come out, come out, wherever you are! Hurry up or Jack will find ya!  :' + count + ' seconds');
-      startTimer(fortySec, display);
-    });  
+    // jQuery(function ($) {
+    //   var fortySec = 40,
+    //       display = $('#timer').html('Come out, come out, wherever you are! Hurry up or Jack will find ya!  :' + count + ' seconds');
+    //   startTimer(fortySec, display);
+    // });  
     
     // var counter = setInterval(timer, 1000);
       // let count = 30;
@@ -100,11 +101,6 @@ $(document).ready(function(){
 
 
       // questionObject.question 
-      }
-    
-  //  FUNCTION CALLS AND GAME INTERACTION
-    //  remove the game description text and element + start button to allow for questions to 
-    //  be appended with different formatting and attributes  
 
       
   });
