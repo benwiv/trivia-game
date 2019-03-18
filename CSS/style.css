@@ -87,6 +87,12 @@ body {
   line-height: 1.3em;
 }
 
+.post-answer {
+  margin: 5% 3% 3% 3%;
+  font-size: 45px;
+  line-height: 1.3em;
+}
+
 .game-answers {
   color: rgb(173, 0, 0);
   margin: 5%;
@@ -94,6 +100,9 @@ body {
   line-height: 1.3em;
 }
 
+.game-answer-single {
+  margin: 2%;
+}
 
 /*///////  EFFECTS  ///////*/
 
