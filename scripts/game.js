@@ -64,10 +64,10 @@ const renderQuestion = function(questionNow) {
 const renderAnswers = function(questionNow){
   //  creates div and appends each answer  //
   for (let i=0; i<4; i++){
-    let newDiv2 = $("<p class='game-answer-single fade-in'>").text(questionData[questionNow].answers[i]);
+    let newDiv2 = $("<p class='game-answer-single fade-in grow'>").text(questionData[questionNow].answers[i]);
     $('#game-content-2').append(newDiv2);
   }; 
-  
+
   let newDivTimer = $("<p class='timer fade-in'>").text('Come out, come out, wherever you are! Hurry up or Jack will find ya!');
   $('#timer-container').append(newDivTimer); 
   let newDivTime = $("<p class='time fade-in'>").text(count + 'seconds left...');
