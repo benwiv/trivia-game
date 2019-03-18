@@ -51,14 +51,14 @@ let timerCount = 45;
 let isAnswered = false;
 let totalWrong = 0;
 let totalCorrect = 0;
+let questionTimer;
+let count = 45;
 
 // ========FUNCTIONS========  //
 
 const renderQuestion = function(questionNow) {
   let newDiv = $("<p class='game-q fade-in'>").text(questionData[questionNow].question);
   $('#game-content-2').append(newDiv);
-  let newDivTimer = $("<p class='timer fade-in'>").text('Come out, come out, wherever you are! Hurry up or Jack will find ya!  :' + count + ' seconds');
-  $('#game-content-2').append(newDivTimer);
 };
 
 const renderAnswers = function(questionNow){
@@ -66,7 +66,12 @@ const renderAnswers = function(questionNow){
   for (let i=0; i<4; i++){
     let newDiv2 = $("<p class='game-answer-single fade-in'>").text(questionData[questionNow].answers[i]);
     $('#game-content-2').append(newDiv2);
-  };
+  }; 
+  
+  let newDivTimer = $("<p class='timer fade-in'>").text('Come out, come out, wherever you are! Hurry up or Jack will find ya!');
+  $('#timer-container').append(newDivTimer); 
+  let newDivTime = $("<p class='time fade-in'>").text(count + 'seconds left...');
+  $('#timer-container').append(newDivTime);
 };
 
 const renderPostAnswer = function(questionNow){
@@ -74,38 +79,59 @@ const renderPostAnswer = function(questionNow){
   $('#game-content-2').append(newDiv);
   let newDivImg = $("<img class='gif fade-in'>").attr('src',questionData[questionNow].questionGif) 
   $('#game-content-2').append(newDivImg);
-  timerCount=45;
+  count=timerCount;
 };
+
+const renderTime = function(){
+  $('.time').text(':' + count + ' seconds left...');
+}
 
 const questionSequence = function(){
   let gameRound = round;
   let currentQuestion = keyArray[gameRound];
   let answerNow = questionData[currentQuestion].correctAnswer;
-  let userAnswer;
+  let userAnswer= '';
 
-  $('.game-answer-single').on('click',function(){
-    console.log(this);
-  })
-
-  if (timerCount === (timerCount-1)) {
+  if (count === (timerCount-1)) {
     renderQuestion(currentQuestion);
   }
-  else if (timerCount === (timerCount-2)) {
+  else if (count === (timerCount-2)) {
     renderAnswers(currentQuestion);
   }
-  else if (timerCount === 0) {
-
+  else if (count === 0) {
+    clearInterval(questionTimer);
+    renderPostAnswer(currentQuestion);
   }
   else if (isAnswered === true) {
     renderPostAnswer(currentQuestion);
     clearInterval(questionTimer);
   }
 
-  timerCount--;
+  renderTime();
+  count--;
 };
 
+//  ===============EVENT LISTENERS/FUNCTIONS==============  //
+$(document).ready(function(){
+  //  autoplays music  //
+  $('#yes-audio').attr('play',true);
 
+  //  ===START GAME FUNCTION on click of start room key/start button=====  //
+  $('#start-btn').on('click',function(){  
+    $('#hotel-key-div').fadeOut("slow");
+    $('#game-content-1').fadeOut("slow");
+    // $('#game-content-2').fadeOut("slow");
+    // $('#game-content-2').html('<section id="game-content-2"></section>')
+    
+    let count = timerCount;
 
+    questionTimer = setInterval(questionSequence,(1000));
+
+    $('.game-answer-single').on('click',function(){
+      console.log(this);
+    });
+  });
+});
 
 //   if(flag === (numQuestions-1)){
 //     clearInterval(intervalId);
@@ -126,20 +152,7 @@ const questionSequence = function(){
 //   $('#timer').html('Come out, come out, wherever you are! Hurry up or Jack will find ya!  :' + count + ' seconds')
 // }, 1000*45);
 
-//  ===============EVENT LISTENERS/FUNCTIONS==============  //
-$(document).ready(function(){
-  //  autoplays music  //
-  $('#yes-audio').attr('play',true);
 
-  //  ===START GAME FUNCTION on click of start room key/start button=====  //
-  $('#start-btn').on('click',function(){  
-    $('#hotel-key-div').fadeOut("slow");
-    $('#game-content-1').fadeOut("slow");
-    // $('#game-content-2').fadeOut("slow");
-    // $('#game-content-2').html('<section id="game-content-2"></section>')
-    for (let k=0; k<numQuestions; k++) {
-      const questionTimer = setInterval(questionSequence,(1000*timerCount));
-    };
     // var intervalId = setInterval(function(){
     //   let currentQ = qObject.questionList[flag];
     //   // let currentAnswers = qObject.answerList[interV];
@@ -164,8 +177,7 @@ $(document).ready(function(){
     //   count--;
     //   $('#timer').html('Come out, come out, wherever you are! Hurry up or Jack will find ya!  :' + count + ' seconds')
     // }, 1000*45);
-});
-});
+
     // for (let i=0; i < qArray; i++) {
     //   let currentQ = qObject.questionList[i];
     //   let currentAnswers = qObject.answerList[i];
@@ -180,29 +192,3 @@ $(document).ready(function(){
     // $('#game-content-2').text(timerSpan);  
     // $('#question-text').text('test test test');
     // questionObject.question 
-
-      
-
-
-
-
-
-
-
-
-  // let showAnswer = function(){
-
-  // };
-
-  // let checkAnswer = function(array){
-
-  // };
-
-  //  FIRST ACTION
-  
-
-
-
-
-  
-
