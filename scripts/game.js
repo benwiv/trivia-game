@@ -84,8 +84,10 @@ const renderPostAnswer = function(questionNow){
 };
 
 const renderGameOver = function() {
-  let newDiv = $("<p id='game-over-screen fade-in'>").text(questionData[questionNow].question);
+  let newDiv = $("<p id='game-over-screen fade-in'>").text('');  
   $('#game-content-2').append(newDiv);
+  let newDivImg = $("<img class='gif fade-in'>").attr('src','http://awesomenator.com/content/2012/12/jack-nicholson-gif-7.gif') 
+  $('#game-content-2').append(newDivImg);
 }
 
 const renderTime = function(){
@@ -115,12 +117,13 @@ const questionSequence = function(){
   let currentQuestion = keyArray[gameRound];
   let answerNow = questionData[currentQuestion].correctAnswer;
   let userAnswer = '';
+  let count = timerCount;
 
   resetBoard(gameRound);
+  startTimer()
 
 
-
-
+  
   if (count === (timerCount-1)) {
     renderQuestion(currentQuestion);
   }
@@ -159,8 +162,6 @@ $(document).ready(function(){
 
     // $('#game-content-2').fadeOut("slow");
     // $('#game-content-2').html('<section id="game-content-2"></section>')
-    
-    let count = timerCount;
     
     for (let k=0; k<numQuestions; k++){
 
