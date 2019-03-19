@@ -8,6 +8,7 @@ const questionData = {
       correctAnswer: 1,
       postAnswer: 'how shocking! we forgive you Jack...',
       questionGif: 'https://media.giphy.com/media/hNNIEcRzZanWU/giphy.gif'
+      
     },
     q2: {
       question:'Danny has an imaginary friend that lives in his mouth who tells him secrets about the world around him...what name does Danny give this friend?',
@@ -47,12 +48,12 @@ const questionData = {
 const keyArray = Object.keys(questionData);
 const numQuestions = keyArray.length;
 let round = 0;
-let timerCount = 45;
+let timerCount = 10;
 let isAnswered = false;
 let totalWrong = 0;
 let totalCorrect = 0;
 let questionTimer;
-let count = 45;
+let count = 10;
 
 // ========FUNCTIONS========  //
 
@@ -82,15 +83,43 @@ const renderPostAnswer = function(questionNow){
   count=timerCount;
 };
 
+const renderGameOver = function() {
+  let newDiv = $("<p id='game-over-screen fade-in'>").text(questionData[questionNow].question);
+  $('#game-content-2').append(newDiv);
+}
+
 const renderTime = function(){
   $('.time').text(':' + count + ' seconds left...');
 }
+
+const startTimer = function() {
+  clear(questionTimer);
+  questionTimer = setInterval(questionSequence,(1000));
+}
+
+const resetBoard = function(roundNow) {
+  if (roundNow === 0) {
+    $('#hotel-key-div').fadeOut("slow");
+    $('#game-content-1').fadeOut("slow");
+  }
+  else if ((roundNow>0) && (roundNow<numQuestions)) {
+    $('game-content-2').fadeOut('slow');
+  }
+
+
+}
+
 
 const questionSequence = function(){
   let gameRound = round;
   let currentQuestion = keyArray[gameRound];
   let answerNow = questionData[currentQuestion].correctAnswer;
-  let userAnswer= '';
+  let userAnswer = '';
+
+  resetBoard(gameRound);
+
+
+
 
   if (count === (timerCount-1)) {
     renderQuestion(currentQuestion);
@@ -98,18 +127,27 @@ const questionSequence = function(){
   else if (count === (timerCount-2)) {
     renderAnswers(currentQuestion);
   }
-  else if (count === 0) {
+  else if ((count === 0) && (round===numQuestions)){
     clearInterval(questionTimer);
-    renderPostAnswer(currentQuestion);
+    // renderPostAnswer(currentQuestion);
   }
-  else if (isAnswered === true) {
-    renderPostAnswer(currentQuestion);
+  else if ((count === 0) && (round<numQuestions)){
+    round++;
     clearInterval(questionTimer);
+    $('game-content-2').fadeOut('slow')
+    // renderPostAnswer(currentQuestion);
+  }
+  else if (isAnswered===true) {
+
   }
 
   renderTime();
   count--;
 };
+
+
+
+
 
 //  ===============EVENT LISTENERS/FUNCTIONS==============  //
 $(document).ready(function(){
@@ -118,18 +156,18 @@ $(document).ready(function(){
 
   //  ===START GAME FUNCTION on click of start room key/start button=====  //
   $('#start-btn').on('click',function(){  
-    $('#hotel-key-div').fadeOut("slow");
-    $('#game-content-1').fadeOut("slow");
+
     // $('#game-content-2').fadeOut("slow");
     // $('#game-content-2').html('<section id="game-content-2"></section>')
     
     let count = timerCount;
+    
+    for (let k=0; k<numQuestions; k++){
 
-    questionTimer = setInterval(questionSequence,(1000));
+      questionSequence();
 
-    $('.game-answer-single').on('click',function(){
-      console.log(this);
-    });
+    }
+
   });
 });
 
