@@ -3,7 +3,7 @@
 //  ======OBJECT conataining questions objects====== //
 const questionData = {
     q1: {
-      question:'To keep Jack Nicholson in the right agitated mood, he was only fed this food for two weeks that he hates...',
+      question:'To keep Jack Nicholson in the right agitated mood, he was only served a food that he hates. The food was...',
       answers:['spaghetti','cheese sandwiches','hot dogs','tuna salad'],
       correctAnswer: 1,
       postAnswer: 'how shocking! we forgive you Jack...',
@@ -48,12 +48,16 @@ const questionData = {
 const keyArray = Object.keys(questionData);
 const numQuestions = keyArray.length;
 let round = 0;
-let timerCount = 10;
+let timerCount = 45;
 let isAnswered = false;
 let totalWrong = 0;
 let totalCorrect = 0;
 let questionTimer;
-let count = 10;
+let count = 45;
+let userAnswer = '';
+let currentQuestion = keyArray[round];
+let answerNow = questionData[currentQuestion].correctAnswer;
+
 
 // ========FUNCTIONS========  //
 
@@ -66,6 +70,7 @@ const renderAnswers = function(questionNow){
   //  creates div and appends each answer  //
   for (let i=0; i<4; i++){
     let newDiv2 = $("<p class='game-answer-single fade-in grow'>").text(questionData[questionNow].answers[i]);
+    $(newDiv2).attr('data-answer',i)
     $('#game-content-2').append(newDiv2);
   }; 
 
@@ -75,11 +80,14 @@ const renderAnswers = function(questionNow){
   $('#timer-container').append(newDivTime);
 };
 
-const renderPostAnswer = function(questionNow){
+let renderPostAnswer = function(questionNow){
   let newDiv = $("<p class='post-answer fade-in'>").text(questionData[questionNow].postAnswer);
   $('#game-content-2').append(newDiv);
   let newDivImg = $("<img class='gif fade-in'>").attr('src',questionData[questionNow].questionGif) 
   $('#game-content-2').append(newDivImg);
+  let nextButton = $("<p id='click-next' class='fade-in grow'>").text('go look around the corner');
+  $('#game-content-2').append(nextButton);
+
   count=timerCount;
 };
 
@@ -94,61 +102,43 @@ const renderTime = function(){
   $('.time').text(':' + count + ' seconds left...');
 }
 
-const startTimer = function() {
-  clear(questionTimer);
-  questionTimer = setInterval(questionSequence,(1000));
+const resetBoard = function() {
+  $('#game-content-2').fadeOut('fast');
+  $('.timer').fadeOut('fast')
+  $('.time').fadeOut('fast')  
 }
-
-const resetBoard = function(roundNow) {
-  if (roundNow === 0) {
-    $('#hotel-key-div').fadeOut("slow");
-    $('#game-content-1').fadeOut("slow");
-  }
-  else if ((roundNow>0) && (roundNow<numQuestions)) {
-    $('game-content-2').fadeOut('slow');
-  }
-
-
-}
-
 
 const questionSequence = function(){
-  let gameRound = round;
-  let currentQuestion = keyArray[gameRound];
-  let answerNow = questionData[currentQuestion].correctAnswer;
-  let userAnswer = '';
-  let count = timerCount;
+  // let currentQuestion = keyArray[round];
+  // let answerNow = questionData[currentQuestion].correctAnswer;
 
-  resetBoard(gameRound);
-  startTimer()
-
-
-  
   if (count === (timerCount-1)) {
     renderQuestion(currentQuestion);
-  }
-  else if (count === (timerCount-2)) {
     renderAnswers(currentQuestion);
-  }
-  else if ((count === 0) && (round===numQuestions)){
-    clearInterval(questionTimer);
-    // renderPostAnswer(currentQuestion);
   }
   else if ((count === 0) && (round<numQuestions)){
     round++;
     clearInterval(questionTimer);
-    $('game-content-2').fadeOut('slow')
+    resetBoard();
     // renderPostAnswer(currentQuestion);
+  } 
+  else if ((count === 0) && (round===numQuestions)){
+    clearInterval(questionTimer);
+    resetBoard();
+    // renderGameOver();
   }
-  else if (isAnswered===true) {
 
+  else if (isAnswered===true) {
+    clearInterval(questionTimer);
+    console.log('true switch confirm')
+    console.log(round);
+    console.log(isAnswered)
+    round++;
   }
 
   renderTime();
   count--;
 };
-
-
 
 
 
@@ -159,75 +149,31 @@ $(document).ready(function(){
 
   //  ===START GAME FUNCTION on click of start room key/start button=====  //
   $('#start-btn').on('click',function(){  
-
-    // $('#game-content-2').fadeOut("slow");
-    // $('#game-content-2').html('<section id="game-content-2"></section>')
+    //  clear out intro materials
+    $('#hotel-key-div').fadeOut('fast');
+    $('#game-content-1').fadeOut('fast');
     
-    for (let k=0; k<numQuestions; k++){
+    //  setInterval function @ :45s
+    let count = timerCount;
+    questionTimer = setInterval(questionSequence,(1000));    
+  });
 
-      questionSequence();
+  $(document).on('click','.game-answer-single', function(){
+    isAnswered = true;
+    console.log('click working');
+    userAnswer = $(this).attr('data-answer');
+    resetBoard();
+    // renderPostAnswer(currentQuestion);
 
-    }
+
+    // resetBoard();
+    // $('#game-content-2').promise().done(questionSequence());
 
   });
+
 });
 
-//   if(flag === (numQuestions-1)){
-//     clearInterval(intervalId);
-//   }
-//   // else if ($(playerGuess).val){
-//   //   //check answer
-//   // }
-  
-//   let newDiv = $("<p class='game-q' class='fade-in'>").text(currentQ);
-//   $('#game-content-2').append(newDiv);
-  
-//   let answerArr = qObject.answerList[i];
-//   let newADiv1 = $("<p class='game-answer-single' class='fade-in'>").text(answerArr[j]);
-//     $('#game-content-2').append(newDiv2);
 
-//   i++;
-//   count--;
-//   $('#timer').html('Come out, come out, wherever you are! Hurry up or Jack will find ya!  :' + count + ' seconds')
-// }, 1000*45);
-
-
-    // var intervalId = setInterval(function(){
-    //   let currentQ = qObject.questionList[flag];
-    //   // let currentAnswers = qObject.answerList[interV];
-    //   // let currentCorrect = qObject.correctAnswerList[i];
-    //   // let playerGuess = 99;
-
-    //   if(flag === (numQuestions-1)){
-    //     clearInterval(intervalId);
-    //   }
-    //   // else if ($(playerGuess).val){
-    //   //   //check answer
-    //   // }
-      
-    //   let newDiv = $("<p class='game-q' class='fade-in'>").text(currentQ);
-    //   $('#game-content-2').append(newDiv);
-      
-    //   let answerArr = qObject.answerList[i];
-    //   let newADiv1 = $("<p class='game-answer-single' class='fade-in'>").text(answerArr[j]);
-    //     $('#game-content-2').append(newDiv2);
-
-    //   i++;
-    //   count--;
-    //   $('#timer').html('Come out, come out, wherever you are! Hurry up or Jack will find ya!  :' + count + ' seconds')
-    // }, 1000*45);
-
-    // for (let i=0; i < qArray; i++) {
-    //   let currentQ = qObject.questionList[i];
-    //   let currentAnswers = qObject.answerList[i];
-    //   let currentCorrect = qObject.correctAnswerList[i];
-
-    // let currentKey = qObject[gameRound];
-    // let currentObject = qObject[currentKey];
-  
-    // let questionObject = qObject[gameRound];
-    // $('#start-btn').remove();
-    // let timerSpan =  $('<span id="timer">')
-    // $('#game-content-2').text(timerSpan);  
-    // $('#question-text').text('test test test');
-    // questionObject.question 
+// for (let k=0; k<numQuestions; k++){
+//   questionSequence();
+// }

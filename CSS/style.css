@@ -86,12 +86,19 @@ body {
       line-height: 1.3em;
     }
     
+    #click-next {
+      text-align: center;
+      min-width: 100px;
+      align-self: center;
+      font-size: 25px;
+    }
+
     #game-over-screen{
       margin: 3% 3% 7% 3%;
       font-size: 45px;
       line-height: 1.3em;
     }
-    
+
   #timer-container {
     position:relative;
     text-align: center;
