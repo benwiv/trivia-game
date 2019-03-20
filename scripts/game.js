@@ -13,15 +13,15 @@ const questionData = [
     question:'Danny has an imaginary friend that lives in his mouth who tells him secrets about the world around him...what name does Danny give this friend?',
     answers:['Charles','Bud','Tony','Chip'],
     correctAnswer: 2,
-    postAnswer: '',
-    questionGif: ''
+    postAnswer: 'how shocking! we forgive you Jack...',
+    questionGif: 'https://media.giphy.com/media/hNNIEcRzZanWU/giphy.gif'
   },
   {
     question:'How many years did it take Kubrick and his team to create "The Shining"?',
     answers:['1 year', '3 years', '5 years', '8 years'],
     correctAnswer: 2,
-    postAnswer: '',
-    questionGif: ''
+    postAnswer: 'how shocking! we forgive you Jack...',
+    questionGif: 'https://media.giphy.com/media/hNNIEcRzZanWU/giphy.gif'
   },
   {
     question:'After 1 week in theatres, Kubrick decided to use a different ending and yanked the first version from cinemas around the country. In that first version...',
@@ -74,33 +74,56 @@ const renderAnswers = function(){
     $('#game-content-2').append(newDiv2);
   }; 
 
-  let newDivTimer = $("<p class='timer fade-in'>").text('Come out, come out, wherever you are! Hurry up or Jack will find ya!');
+  const newDivTimer = $("<p class='timer fade-in'>").text('Come out, come out, wherever you are! Hurry up or Jack will find ya!');
   $('#timer-container').append(newDivTimer); 
   const newDivTime = $("<p class='time fade-in'>").text(count + 'seconds left...');
   $('#timer-container').append(newDivTime);
 };
 
 const renderPostAnswer = function(){
+  $('#game-content-2').attr('style',"display:''");
   const newDiv = $("<p class='post-answer fade-in'>").text(questionData[round].postAnswer);
   $('#game-content-2').append(newDiv);
-  const newDivImg = $("<img class='gif fade-in'>").attr('src',questionData[round].questionGif) 
+  const newDivImg3 = $("<img id='post-tv-frame-BG' class='fade-in'>").attr('src','./assets/shining_tv_smart_BG.png') 
+  $('#game-content-2').append(newDivImg3);
+  const newDivImg2 = $("<img id='post-tv-frame' class='fade-in'>").attr('src','./assets/shining_tv_smart.png') 
+  $('#game-content-2').append(newDivImg2);
+  const newDivImg = $("<img id='post-gif' class='gif fade-in'>").attr('src',questionData[round].questionGif) 
   $('#game-content-2').append(newDivImg);
-  let nextButton = $("<p id='click-next' class='fade-in grow'>").text('go look around the corner');
+  const nextButton = $("<p id='click-next' class='fade-in grow pulse'>").text('go look around the corner');
   $('#game-content-2').append(nextButton);
+  const nextButton2 = $("<p id='click-next' class='fade-in grow pulse'>").text('(click here)');
+  $('#game-content-2').append(nextButton2);
 
   count=timerAmount;
+  isAnswered=false;
+  round++;
 };
 
 const resetBoard = function() {
-  $('#game-content-2').fadeOut('fast');
-  $('.timer').fadeOut('fast')
-  $('.time').fadeOut('fast',renderPostAnswer);
+  $('#game-content-2').fadeOut('slow').empty();
+  $('.timer').fadeOut('slow').empty();
+  $('.time').fadeOut('slow').empty();
+
+  if (isAnswered===true) {
+    // setTimeout(renderPostAnswer,1000)
+    renderPostAnswer();
+  }
+  else if (isAnswered===false) {
+    if (round<numQuestions) {
+      // questionTimer = setTimeout(setInterval(questionSequence,(1000)),1000);
+      setInterval(questionSequence,1000)
+    }
+    else if (round===numQuestions) {
+      renderGameOver();
+    }
+  }
 }
 
 const renderGameOver = function() {
-  let newDiv = $("<p id='game-over-screen fade-in'>").text('');  
+  const newDiv = $("<p id='game-over-screen fade-in'>").text('donezo');  
   $('#game-content-2').append(newDiv);
-  let newDivImg = $("<img class='gif fade-in'>").attr('src','http://awesomenator.com/content/2012/12/jack-nicholson-gif-7.gif') 
+  const newDivImg = $("<img class='gif fade-in'>").attr('src','http://awesomenator.com/content/2012/12/jack-nicholson-gif-7.gif') 
   $('#game-content-2').append(newDivImg);
 }
 
@@ -112,7 +135,8 @@ const questionSequence = function(){
   // let currentQuestion = keyArray[round];
   // let answerNow = questionData[currentQuestion].correctAnswer;
 
-  if (count === (timerAmount-1)) {
+  if (count === (timerAmount)) {
+    $('#game-content-2').attr('style',"display:''");  
     renderQuestion();
     renderAnswers();
   }
@@ -151,12 +175,12 @@ $(document).ready(function(){
   //  ===START GAME FUNCTION on click of start room key/start button=====  //
   $('#start-btn').on('click',function(){  
     //  clear out intro materials
-    $('#hotel-key-div').fadeOut('fast');
-    $('#game-content-1').fadeOut('fast');
+    $('#hotel-key-div').fadeOut('slow');
+    $('#game-content-1').fadeOut('slow');
     
     //  setInterval function @ :45s
     let count = timerAmount;
-    questionTimer = setInterval(questionSequence,(1000));    
+    questionTimer = setInterval(questionSequence,1000);    
   });
 
   $(document).on('click','.game-answer-single', function(){
@@ -165,13 +189,20 @@ $(document).ready(function(){
     userAnswer = $(this).attr('data-answer');
     resetBoard();
     console.log(userAnswer);
-    // renderPostAnswer(currentQuestion);
-
-
-    // resetBoard();
-    // $('#game-content-2').promise().done(questionSequence());
-
   });
+
+  $(document).on('click','#click-next', function(){
+    resetBoard();
+    let count = timerAmount;
+
+    // if (round<numQuestions) {
+    //   $('#game-content-2').attr('style',"display:''");  
+    //   questionTimer = setTimeout(setInterval(questionSequence,(1000)),1000);
+    //   }
+    // else if (round===numQuestions) {
+    //   renderGameOver()};
+  });
+
 
 });
 
