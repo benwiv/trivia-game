@@ -32,15 +32,15 @@ const questionData = [
       'the hotel manager tells Wendy there is no sign of any trouble and that the Overlook is reopening'
       ],
     correctAnswer: 3,
-    postAnswer: '',
-    questionGif: ''
+    postAnswer: 'how shocking! we forgive you Jack...',
+    questionGif: 'https://media.giphy.com/media/hNNIEcRzZanWU/giphy.gif'
   },
   {
     question:'"The Shining" followed the biggest box office failure Kubrick ever experienced. What film was this?',
     answers:['Barry Lyndon', '2001: A Space Odyssey', 'Eyes Wide Shut', 'Dr. Strangelove'],
     correctAnswer: 0,
-    postAnswer: '',
-    questionGif: ''
+    postAnswer: 'how shocking! we forgive you Jack...',
+    questionGif: 'https://media.giphy.com/media/hNNIEcRzZanWU/giphy.gif'
   }
 ];
 
@@ -50,8 +50,9 @@ const numQuestions = questionData.length;
 let round = 0;
 let questionTimer;
 let timerAmount = 45;
-let count = 45;
 let isAnswered = false;
+let count = timerAmount;
+
 
 let totalWrong = 0;
 let totalCorrect = 0;
@@ -95,29 +96,28 @@ const renderPostAnswer = function(){
   const nextButton2 = $("<p id='click-next' class='fade-in grow pulse'>").text('(click here)');
   $('#game-content-2').append(nextButton2);
 
-  count=timerAmount;
   isAnswered=false;
   round++;
 };
 
 const resetBoard = function() {
-  $('#game-content-2').fadeOut('slow').empty();
-  $('.timer').fadeOut('slow').empty();
-  $('.time').fadeOut('slow').empty();
-
-  if (isAnswered===true) {
-    // setTimeout(renderPostAnswer,1000)
-    renderPostAnswer();
-  }
-  else if (isAnswered===false) {
-    if (round<numQuestions) {
-      // questionTimer = setTimeout(setInterval(questionSequence,(1000)),1000);
-      setInterval(questionSequence,1000)
+  $('#game-content-2').fadeOut('fast').empty();
+  $('.time').fadeOut('fast').empty();
+  $('.timer').fadeOut('fast', function(){
+    $('.timer').empty();
+    if (isAnswered===true) {
+      renderPostAnswer();
+      clearInterval(questionTimer);
     }
-    else if (round===numQuestions) {
-      renderGameOver();
+    else if (isAnswered===false) {
+      if (round<numQuestions) {
+        questionTimer = setInterval(questionSequence,1000);
+      }
+      else if (round===numQuestions) {
+        renderGameOver();
+      }
     }
-  }
+  });
 }
 
 const renderGameOver = function() {
@@ -142,6 +142,7 @@ const questionSequence = function(){
   }
   else if ((count === 0) && (round<numQuestions)){
     round++;
+    isAnswered = true;
     clearInterval(questionTimer);
     resetBoard();
     // renderPostAnswer();
@@ -152,14 +153,10 @@ const questionSequence = function(){
     // renderGameOver();
   }
 
-  else if (isAnswered===true) {
-    clearInterval(questionTimer);
-    console.log('true switch confirm')
-    console.log(round);
-    console.log(isAnswered)
-    console.log(answerNow);
-    round++;
-  }
+  // else if (isAnswered===true) {
+  //   round++;
+  //   clearInterval(questionTimer);
+  // }
 
   renderTime();
   count--;
@@ -178,35 +175,16 @@ $(document).ready(function(){
     $('#hotel-key-div').fadeOut('slow');
     $('#game-content-1').fadeOut('slow');
     
-    //  setInterval function @ :45s
-    let count = timerAmount;
     questionTimer = setInterval(questionSequence,1000);    
   });
 
   $(document).on('click','.game-answer-single', function(){
-    isAnswered = true;
-    console.log('click working');
     userAnswer = $(this).attr('data-answer');
+    isAnswered = true;
     resetBoard();
-    console.log(userAnswer);
   });
 
   $(document).on('click','#click-next', function(){
     resetBoard();
-    let count = timerAmount;
-
-    // if (round<numQuestions) {
-    //   $('#game-content-2').attr('style',"display:''");  
-    //   questionTimer = setTimeout(setInterval(questionSequence,(1000)),1000);
-    //   }
-    // else if (round===numQuestions) {
-    //   renderGameOver()};
   });
-
-
 });
-
-
-// for (let k=0; k<numQuestions; k++){
-//   questionSequence();
-// }
