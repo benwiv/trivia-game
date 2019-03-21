@@ -131,6 +131,11 @@ body {
     align-self:center;
   }
 
+  #game-content-3 {
+    font-size: 30px;
+    text-align: center;
+    position:relative; 
+  }
 
 /*///////  EFFECTS  ///////*/
 .grow { 
