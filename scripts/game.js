@@ -9,7 +9,7 @@ const questionData = [
     postAnswerCorrect: 'nice! try not to get too comfortable though...',
     postAnswerWrong: 'Wronggg. "cheese sandwiches" are tasty, we get it...',
     postAnswerTime: 'time is up! gotta run faster than that...it was "cheese sandos" by the way',
-    questionGif: 'https://media.giphy.com/media/hNNIEcRzZanWU/giphy.gif'
+    questionGif: 'https://media.giphy.com/media/8oH9JAdQ7ncCA/giphy.gif'
   }, 
   {
     question:'Danny has an imaginary friend that lives in his mouth who tells him secrets about the world around him...what name does Danny give this friend?',
@@ -58,7 +58,7 @@ const numQuestions = questionData.length;
 
 let round = 0;
 let questionTimer;
-let timerAmount = 30;
+let timerAmount = 20;
 let count = timerAmount;
 
 let totalWrong = 0;
@@ -83,7 +83,7 @@ const renderAnswers = function(){
     $('#game-content-2').append(newDiv2);
   }; 
 
-  const newDivTimer = $("<p class='timer fade-in'>").text('Come out, come out, wherever you are! Hurry up or Jack will find ya!');
+  const newDivTimer = $("<p class='timer fade-in'>").text('Come out, come out, wherever you are!');
   $('#timer-container').html(newDivTimer); 
   const newDivTime = $("<p class='time fade-in'>").text(count + 'seconds left...');
   $('#timer-container').append(newDivTime);
@@ -107,7 +107,7 @@ const renderPostAnswer = function(){
   const newDivImg3 = $("<img id='post-tv-frame-BG' class='fade-in'>").attr('src','./assets/shining_tv_smart_BG.png') 
   const newDivImg2 = $("<img id='post-tv-frame' class='fade-in'>").attr('src','./assets/shining_tv_smart.png') 
   const newDivImg = $("<img id='post-gif' class='gif fade-in'>").attr('src',questionData[round].questionGif) 
-  const nextButton = $("<p class='fade-in grow pulse'>").text('go look around the corner');
+  const nextButton = $("<p id='click-next' class='fade-in grow pulse'>").text('go look around the corner');
   const nextButton2 = $("<p id='click-next' class='fade-in grow pulse'>").text('(click here)');
   $('#game-content-2').html(newDiv).append(newDivImg3).append(newDivImg2).append(newDivImg).append(nextButton).append(nextButton2);
 };
@@ -185,8 +185,9 @@ $(document).ready(function(){
   //  ===START GAME FUNCTION on click of start room key/start button=====  //
   $('#start-btn').on('click',function(){  
     //  clear out intro materials
-    $('#hotel-key-div').fadeOut('slow');
-    $('#game-content-1').fadeOut('slow', function(){
+    $('#game-title').toggle('scale')
+    $('#hotel-key-div').fadeOut('fast');
+    $('#game-content-1').fadeOut('fast', function(){
       renderQuestion();
       renderAnswers();
     });

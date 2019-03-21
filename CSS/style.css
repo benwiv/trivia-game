@@ -88,24 +88,26 @@ body {
     }
     
     #post-gif {
+      width:250px;
       position:absolute;
-      top: 35vh;
-      left: 25%;
-      max-width: 280px;
+      top: 39vh;
+      left: 29%;
       z-index: 2;
     }
 
     #post-tv-frame {
+      width: 400px;
       position:absolute;
-      top: 30vh;
-      left: 12%;
+      top: 35vh;
+      left: 22%;
       z-index: 3;
     }
 
     #post-tv-frame-BG {
+      width:400px;
       position:absolute;
-      top: 30vh;
-      left: 12%;
+      top: 34vh;
+      left: 22%;
       z-index: 1;
     }
 
@@ -125,9 +127,9 @@ body {
     }
 
   #timer-container {
-    position:relative;
+    position:absolute;
     text-align: center;
-    margin-top: 8%;
+    top: 2%;
     align-self:center;
   }
 
