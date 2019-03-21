@@ -91,7 +91,7 @@ const renderAnswers = function(){
 
 const renderPostAnswer = function(){
   console.log(userAnswer);
-  console.log(answerNow);
+  console.log('answer correct' + answerNow);
   $('#game-content-2').attr('style',"display:''");
   const newDiv = $("<p class='post-answer fade-in'>");
   // .text(answerFeedback);
@@ -197,6 +197,10 @@ $(document).ready(function(){
   $(document).on('click','.game-answer-single', function(){
 
     userAnswer = $(this).attr('data-answer');
+    answerNow = questionData[round].correctAnswer;
+    postTextCorrect = questionData[round].postAnswerCorrect;
+    postTextWrong = questionData[round].postAnswerWrong; 
+    postTextTime = questionData[round].postAnswerTime;
     resetBoardQuestion();
   });
 
