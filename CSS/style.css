@@ -40,6 +40,7 @@ body {
     font-size: 25px;
     text-align: center;
     margin-bottom: 3%;
+    max-width: 800px;
   }
   
   #game-content-2 {
@@ -57,14 +58,15 @@ body {
     }
 
     #start-btn {
-      height: 340px;
-      width: 340px ;
+      height: 280px;
+      width: 280px ;
     }
 
     #click-text {
       text-align: center;
       min-width: 100px;
       align-self: center;
+      margin-left:30px;
       font-size: 20px;
     }
 
@@ -141,6 +143,11 @@ body {
     position:relative; 
   }
 
+/*///////  MEDIA QUERIES  ///////*/
+/* @media only screen and (min-device-width: 320px) and (max-device-height: 736px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
+  
+} */
+
 /*///////  EFFECTS  ///////*/
 .grow { 
   transition: all .2s ease-in-out; 
@@ -150,8 +157,6 @@ body {
   transform: scale(1.1);
   cursor: pointer; 
 }
-
-
 
 .zoom {
     transition: transform .15s; /* Animation */
