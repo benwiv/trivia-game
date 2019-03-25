@@ -69,15 +69,15 @@ body {
     }
 
     .game-q {
-      margin: 3% 3% 7% 3%;
-      font-size: 45px;
+      margin: 3% 3% 4% 3%;
+      font-size: 40px;
       line-height: 1.3em;
     }
 
     .game-answer-single {
       color: rgb(173, 0, 0);
       margin: 2%;
-      font-size: 40px;
+      font-size: 30px;
       line-height: 1.1em;
     }
 
@@ -88,11 +88,13 @@ body {
     }
     
     #post-gif {
-      width:250px;
+      width:300px;
+      align-self:center;
+      /* width:250px;
       position:absolute;
       top: 39vh;
       left: 29%;
-      z-index: 2;
+      z-index: 2; */
     }
 
     #post-tv-frame {
@@ -127,9 +129,9 @@ body {
     }
 
   #timer-container {
-    position:absolute;
+    position:relative;
+    margin-top:3%;
     text-align: center;
-    top: 2%;
     align-self:center;
   }
 
@@ -158,6 +160,12 @@ body {
 .zoom:hover {
   transform: scale(1.05); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
+
+.zoom-out {
+  transition: transform .15s;
+  transform: scale(.5);
+}
+
 
 .fade-in {
 	opacity: 1;

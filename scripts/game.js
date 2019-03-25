@@ -104,12 +104,14 @@ const renderPostAnswer = function(){
   else{
     $(newDiv).text(postTextWrong);
   }
-  const newDivImg3 = $("<img id='post-tv-frame-BG' class='fade-in'>").attr('src','./assets/shining_tv_smart_BG.png') 
-  const newDivImg2 = $("<img id='post-tv-frame' class='fade-in'>").attr('src','./assets/shining_tv_smart.png') 
+  // const newDivImg3 = $("<img id='post-tv-frame-BG' class='fade-in'>").attr('src','./assets/shining_tv_smart_BG.png') 
+  // const newDivImg2 = $("<img id='post-tv-frame' class='fade-in'>").attr('src','./assets/shining_tv_smart.png') 
   const newDivImg = $("<img id='post-gif' class='gif fade-in'>").attr('src',questionData[round].questionGif) 
   const nextButton = $("<p id='click-next' class='fade-in grow pulse'>").text('go look around the corner');
   const nextButton2 = $("<p id='click-next' class='fade-in grow pulse'>").text('(click here)');
-  $('#game-content-2').html(newDiv).append(newDivImg3).append(newDivImg2).append(newDivImg).append(nextButton).append(nextButton2);
+  // $('#game-content-2').html(newDiv).append(newDivImg2).append(newDivImg3).append(nextButton).append(nextButton2).append(newDivImg);
+  $('#game-content-2').html(newDiv).append(newDivImg).append(nextButton).append(nextButton2);
+
 };
 
 const resetBoardPost = function() {
@@ -185,7 +187,8 @@ $(document).ready(function(){
   //  ===START GAME FUNCTION on click of start room key/start button=====  //
   $('#start-btn').on('click',function(){  
     //  clear out intro materials
-    $('#game-title').toggle('scale')
+    // $('#game-title').toggle('scale')
+    $('#game-title').attr('class','zoom-out');
     $('#hotel-key-div').fadeOut('fast');
     $('#game-content-1').fadeOut('fast', function(){
       renderQuestion();
